@@ -1,9 +1,13 @@
-.datePicker {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 1.5rem;
+.green {
+  background-color: green;
 }
+.orange {
+  background-color: orange;
+}
+.red {
+  background-color: red;
+}
+
 .container {
   height: 40rem;
   padding: 1.5rem;
@@ -21,21 +25,7 @@
   cursor: pointer;
 }
 
-.modal {
-  position: absolute;
-  left: 50%;
-  top: 20%;
-  transform: translate(-50%);
-  background-color: white;
-  width: 20rem;
-  height: 20rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.pagination {
+.datePicker {
   display: flex;
   justify-content: center;
   align-items: center;

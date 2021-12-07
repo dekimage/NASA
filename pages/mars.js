@@ -37,8 +37,8 @@ const fetcher = (url, date, page) => {
 function Image({ item }) {
   const { isShowing, openModal, closeModal } = useModal();
   return (
-    <>
-      <div onClick={openModal} key={item.id} className={styles.image}>
+    <div key={item.id}>
+      <div onClick={openModal} className={styles.image}>
         <img width="100px" src={item.img_src} />
       </div>
       <Modal
@@ -56,21 +56,17 @@ function Image({ item }) {
           <span>Rover: {item.rover.name}</span>
         </div>
       </Modal>
-    </>
+    </div>
   );
 }
 
-function Page({ page, date }) {
-  const { data, error } = useSWR(
-    [url, date, page],
-    (url, date, page) => fetcher(url, date, page),
-    {
-      refreshInterval: 600000,
-    }
-  );
-
-  if (error) return <div>Error fetching Mars Images...</div>;
-  if (!data) return <div>Loading Mars Images...</div>;
+function Page({ data, error }) {
+  if (error)
+    return (
+      <div className={styles.container}>Error fetching Mars Images...</div>
+    );
+  if (!data)
+    return <div className={styles.container}>Loading Mars Images...</div>;
 
   return (
     <div className={styles.container}>
@@ -84,6 +80,24 @@ function Page({ page, date }) {
 export default function Mars() {
   const [date, setDate] = useState(randomDateFormated);
   const [page, setPage] = useState(1);
+  // const [isLastPage, setIsLastPage] = useState(false);
+  const { data, error } = useSWR([url, date, page], (url, date, page) =>
+    fetcher(url, date, page)
+  );
+
+  function handleNextPage() {
+    if (data && data.photos.length < 25) {
+      return;
+    }
+    setPage(page + 1);
+  }
+
+  function handlePreviousPage() {
+    if (page == 1) {
+      return;
+    }
+    setPage(page - 1);
+  }
 
   return (
     <div>
@@ -97,6 +111,7 @@ export default function Mars() {
                 return;
               }
               const formattedDate = moment(newDate).format("YYYY-MM-DD");
+              setPage(1);
               setDate(formattedDate);
             }}
             renderInput={(params) => <TextField {...params} />}
@@ -104,9 +119,12 @@ export default function Mars() {
         </LocalizationProvider>
       </div>
 
-      <Page page={page} date={date} />
-      <button onClick={() => setPage(page - 1)}>Previous</button>
-      <button onClick={() => setPage(page + 1)}>Next</button>
+      <Page data={data} error={error} />
+      <div className={styles.pagination}>
+        <button onClick={() => handlePreviousPage()}>Previous</button>
+        {page}
+        <button onClick={() => handleNextPage()}>Next</button>
+      </div>
     </div>
   );
 }
