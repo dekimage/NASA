@@ -42,7 +42,7 @@ function NearObject({ object }) {
   }
 
   return (
-    <Link href={`/neos/${object.id}`} key={object.id}>
+    <Link href={`/neo/${object.neo_reference_id}`} key={object.id}>
       <div key={object.id} className={styles[label]}>
         <div className={styles.image}>
           <div>{object.name}</div>
