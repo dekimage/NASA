@@ -37,7 +37,6 @@ const fetcher = (url, date, page) => {
 
 function Image({ item }) {
   const { isShowing, openModal, closeModal } = useModal();
-  console.log(item);
   return (
     <div key={item.id}>
       <div onClick={openModal} className={styles.image}>
