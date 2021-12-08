@@ -12,8 +12,8 @@ import Link from "next/link";
 import styles from "../styles/Neos.module.css";
 
 const API_KEY = "BChFdP9eJ8HgXJ1wRaktCYG5EI1ns55KaW49bcj8";
-const url = "https://api.nasa.gov/neo/rest/v1/feed";
 const LUNAR_DISTANCE = 384400;
+const url = "https://api.nasa.gov/neo/rest/v1/feed";
 
 const fetcher = (url, dateRange) => {
   return axios

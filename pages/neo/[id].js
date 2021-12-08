@@ -4,12 +4,10 @@ import { useRouter } from "next/router";
 import { CChart } from "@coreui/react-chartjs";
 import "animate.css";
 import styles from "../../styles/Neos.module.css";
-import { useEffect } from "react";
 
 const API_KEY = "BChFdP9eJ8HgXJ1wRaktCYG5EI1ns55KaW49bcj8";
 const url = "https://api.nasa.gov/neo/rest/v1/neo";
-
-const AVERAGE_LUNAR_DISTANCE = 384400;
+const LUNAR_DISTANCE = 384400;
 
 const fetcher = (url, id) => {
   return axios
@@ -69,11 +67,10 @@ export default function Neo() {
                 },
               ],
             }}
-            labels="dates"
           />
           <div>
             <div>moon svg</div>
-            <span>Average Moon Distance: {AVERAGE_LUNAR_DISTANCE} (Km)</span>
+            <span>Average Moon Distance: {LUNAR_DISTANCE} (Km)</span>
             <div className={styles.line}></div>
             <span>
               Closest Distance relative to Average Moon Distance:{" "}
@@ -82,8 +79,7 @@ export default function Neo() {
             <div
               className={styles.line}
               style={{
-                "--progress":
-                  calculateClosestDistance(data) / AVERAGE_LUNAR_DISTANCE,
+                "--progress": calculateClosestDistance(data) / LUNAR_DISTANCE,
               }}
             ></div>
           </div>

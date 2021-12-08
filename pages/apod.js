@@ -1,9 +1,11 @@
 import useSWR from "swr";
 import axios from "axios";
 import moment from "moment";
-const API_KEY = "BChFdP9eJ8HgXJ1wRaktCYG5EI1ns55KaW49bcj8";
 import styles from "../styles/Apod.module.css";
 import "animate.css";
+
+const API_KEY = "BChFdP9eJ8HgXJ1wRaktCYG5EI1ns55KaW49bcj8";
+const url = "https://api.nasa.gov/planetary/apod";
 
 const getRandomDate = () => {
   const start = new Date(2015, 0, 1);
@@ -16,7 +18,7 @@ const getRandomDate = () => {
 
 const fetcher = () =>
   axios
-    .get("https://api.nasa.gov/planetary/apod", {
+    .get(url, {
       params: {
         date: getRandomDate(),
         api_key: API_KEY,
