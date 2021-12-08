@@ -2,12 +2,14 @@ import useSWR from "swr";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { CChart } from "@coreui/react-chartjs";
-
-import styles from "../../styles/Neo.module.css";
+import "animate.css";
+import styles from "../../styles/Neos.module.css";
+import { useEffect } from "react";
 
 const API_KEY = "BChFdP9eJ8HgXJ1wRaktCYG5EI1ns55KaW49bcj8";
 const url = "https://api.nasa.gov/neo/rest/v1/neo";
-const LUNAR_DISTANCE = 384400;
+
+const AVERAGE_LUNAR_DISTANCE = 384400;
 
 const fetcher = (url, id) => {
   return axios
@@ -26,6 +28,15 @@ export default function Neo() {
     fetcher(url, routeId)
   );
 
+  function calculateClosestDistance(data) {
+    const distances = data.close_approach_data.map(
+      (object) => object.miss_distance.kilometers
+    );
+    const closestDistance = Math.min(...distances);
+
+    return Math.round(closestDistance);
+  }
+
   return (
     <div>
       {error && (
@@ -35,7 +46,13 @@ export default function Neo() {
         <div className={styles.container}>Loading Single NEO...</div>
       )}
       {data && (
-        <div>
+        <div className="animate__animated animate__zoomIn">
+          <div className={styles.stats}>
+            <span>id: {data.id}</span>
+            <span>name: {data.name}</span>
+            <span>absolute_magnitude_h: {data.absolute_magnitude_h}</span>
+            <span>designation: {data.absolute_magnitude_h}</span>
+          </div>
           <CChart
             type="bar"
             data={{
@@ -54,6 +71,22 @@ export default function Neo() {
             }}
             labels="dates"
           />
+          <div>
+            <div>moon svg</div>
+            <span>Average Moon Distance: {AVERAGE_LUNAR_DISTANCE} (Km)</span>
+            <div className={styles.line}></div>
+            <span>
+              Closest Distance relative to Average Moon Distance:{" "}
+              {calculateClosestDistance(data)} (Km)
+            </span>
+            <div
+              className={styles.line}
+              style={{
+                "--progress":
+                  calculateClosestDistance(data) / AVERAGE_LUNAR_DISTANCE,
+              }}
+            ></div>
+          </div>
         </div>
       )}
     </div>

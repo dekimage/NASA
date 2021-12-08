@@ -9,6 +9,7 @@ import useModal from "../hooks/Modal";
 import TextField from "@mui/material/TextField";
 import DatePicker from "@mui/lab/DatePicker";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import "animate.css";
 
 import styles from "../styles/Mars.module.css";
 
@@ -47,7 +48,9 @@ function Image({ item }) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <div className={styles.modal}>
+        <div
+          className={`${styles.modal} animate__animated animate__zoomInDown`}
+        >
           <img width="100px" src={item.img_src} />
           <span>ID: {item.id}</span>
           <span>Camera: {item.camera.full_name}</span>

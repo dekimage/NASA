@@ -16,6 +16,7 @@
     "@mui/lab": "^5.0.0-alpha.59",
     "@mui/material": "^5.2.3",
     "and": "^0.0.3",
+    "animate.css": "^4.1.1",
     "axios": "^0.24.0",
     "date-fns": "^2.27.0",
     "install": "^0.13.0",
