@@ -12,7 +12,7 @@
   height: 40rem;
   padding: 1.5rem;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
   gap: 1rem;
 }
 .image {
@@ -46,4 +46,41 @@
   min-width: 1rem;
   margin: 1rem;
   height: 1rem;
+}
+
+.ellipsesBox {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.earth {
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: blue;
+  border-radius: 50%;
+}
+
+.moon {
+  width: 1rem;
+  height: 1rem;
+  position: absolute;
+  background-color: gray;
+  border-radius: 50%;
+  top: 4.5rem;
+}
+
+.asteroid {
+  content: "";
+  width: 15rem;
+  height: 0.5rem;
+  background-color: black;
+  position: absolute;
+  top: calc(var(--progress, 0) * 3rem + 1.5rem);
+}
+
+.tooltip {
+  margin-left: 2rem;
 }

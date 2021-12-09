@@ -83,6 +83,23 @@ export default function Neo() {
               }}
             ></div>
           </div>
+
+          <div className={styles.ellipsesBox}>
+            <div className={styles.earth}>
+              <div className={styles.tooltip}>earth</div>
+            </div>
+            <div className={styles.moon}>
+              <div className={styles.tooltip}>moon</div>
+            </div>
+            <div
+              className={styles.asteroid}
+              style={{
+                "--progress": calculateClosestDistance(data) / LUNAR_DISTANCE,
+              }}
+            >
+              <div className={styles.tooltip}>Asteroid</div>
+            </div>
+          </div>
         </div>
       )}
     </div>

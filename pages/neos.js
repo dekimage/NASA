@@ -9,6 +9,7 @@ import Box from "@mui/material/Box";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import Link from "next/link";
 
+import { List } from "react-virtualized";
 import styles from "../styles/Neos.module.css";
 
 const API_KEY = "BChFdP9eJ8HgXJ1wRaktCYG5EI1ns55KaW49bcj8";
@@ -30,6 +31,11 @@ const fetcher = (url, dateRange) => {
 function NearObject({ object }) {
   let label;
   const objectDistance = object.close_approach_data[0].miss_distance.kilometers;
+  console.log(objectDistance);
+  console.log(LUNAR_DISTANCE);
+  console.log(
+    objectDistance < LUNAR_DISTANCE && objectDistance > LUNAR_DISTANCE / 2
+  );
 
   if (objectDistance > LUNAR_DISTANCE) {
     label = "green";
@@ -57,6 +63,17 @@ export default function Neo() {
   const { data, error } = useSWR([url, dateRange], (url, dateRange) =>
     fetcher(url, dateRange)
   );
+
+  const renderRow = ({ index, key, style, parent }) => {
+    const asteroids = parent.props.asteroidList;
+    return (
+      <div>
+        <div key={key} style={style}>
+          <NearObject object={asteroids[index]} />
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div>
@@ -87,12 +104,18 @@ export default function Neo() {
       {data && (
         <div className={styles.container}>
           {Object.keys(data.near_earth_objects).map((date, i) => {
+            const asteroidListPerDate = data.near_earth_objects[date];
             return (
               <div key={i}>
                 <span>{date}</span>
-                {data.near_earth_objects[date].map((object) => (
-                  <NearObject object={object} />
-                ))}
+                <List
+                  width={200}
+                  height={600}
+                  rowRenderer={renderRow}
+                  rowCount={asteroidListPerDate.length}
+                  rowHeight={60}
+                  asteroidList={asteroidListPerDate}
+                />
               </div>
             );
           })}
